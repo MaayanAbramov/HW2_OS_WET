@@ -17,7 +17,7 @@
 #define DUTY_CLR 'd'
 #define ISOLATE_CLR 'i'
 asmlinkage long sys_hello(void) {
-    printk("Hello, World!\n");
+    printk("Hello, World!\n"); // hello
     return 0;
 }
 asmlinkage long sys_set_sec(int sword, int midnight, int clamp, int duty, int isolate) {
