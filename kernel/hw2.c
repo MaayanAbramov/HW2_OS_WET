@@ -5,6 +5,7 @@
 #include <linux/sched/mm.h>
 #include <linux/sched/task.h>
 #include <linux/mm.h>
+#include <linux/capability.h>
 #include <asm/tlbflush.h>
 #define SWORD_MAGIC 0x80
 #define MIDNIGHT_MAGIC 0x40
@@ -16,6 +17,7 @@
 #define CLAMP_CLR 'c'
 #define DUTY_CLR 'd'
 #define ISOLATE_CLR 'i'
+
 asmlinkage long sys_hello(void) {
     printk("Hello, World!\n"); // hello
     return 0;
@@ -24,9 +26,9 @@ asmlinkage long sys_set_sec(int sword, int midnight, int clamp, int duty, int is
     if (sword < 0 || midnight < 0 || clamp < 0 || duty < 0 || isolate < 0) {
         return -EINVAL;
     }
-    //if not root privilieges{
-        //return -EPERM;
-    //}
+    if (!capable(CAP_SYS_ADMIN)) {
+      return -EPERM;
+    }
     int is_sword = (sword > 0);
     int is_midnight = (midnight>0);
     int is_clamp = (clamp >0);
@@ -34,23 +36,34 @@ asmlinkage long sys_set_sec(int sword, int midnight, int clamp, int duty, int is
     int is_isolate = (isolate > 0);
     char new_clearance = 0;
     if(is_sword){
+#ifndef NDEBUG
         printk("is_sword!\n");
+#endif
         new_clearance = new_clearance | SWORD_MAGIC;
     }
     if(is_midnight){
-        printk("is_midnight!\n");
+#ifndef NDEBUG
+      printk("is_midnight!\n");
+#endif
         new_clearance = new_clearance | MIDNIGHT_MAGIC;
     }
     if(is_clamp){
-        printk("is_clamp!\n");
+#ifndef NDEBUG
+      printk("is_clamp!\n");
+#endif
         new_clearance = new_clearance | CLAMP_MAGIC;
     }
+
     if(is_duty){
-        printk("is_duty!\n");
+#ifndef NDEBUG
+      printk("is_duty!\n");
+#endif
         new_clearance = new_clearance | DUTY_MAGIC;
     }
     if(is_isolate){
-        printk("is_isolate!\n");
+#ifndef NDEBUG
+      printk("is_isolate!\n");
+#endif
         new_clearance = new_clearance | ISOLATE_MAGIC;
     }
     current->clearance = new_clearance;
@@ -82,11 +95,13 @@ asmlinkage long sys_get_sec(char clr) {
       if(is_isolate_clr){
         return ((current->clearance & ISOLATE_MAGIC)>0)? 1 : 0 ;
     }
-    printk("problem in sys_get_sec, none of the conditions above got checked... doesnt make sense\n");
+#ifndef NDEBUG
+      printk("problem in sys_get_sec, none of the conditions above got checked... doesnt make sense\n");
+#endif
     return -1;
 }
 asmlinkage long sys_check_sec(pid_t pid, char clr) {
-    if (clr != 's' && clr != 'm' && clr != 'c' && clr !='i' && clr != 'd') {
+    if (clr != SWORD_CLR && clr != MIDNIGHT_CLR && clr != CLAMP_CLR && clr != ISOLATE_CLR && clr != DUTY_CLR) {
         return -EINVAL;
     }
     struct task_struct* p = find_task_by_vpid(pid);
@@ -152,7 +167,7 @@ int parents_clr_converter(int height, char MAGIC) {
     return sum_true_clr;
 }
 asmlinkage long sys_flip_sec_branch(int height, char clr) {
-    if ((clr != 's' && clr != 'm' && clr != 'c' && clr !='i' && clr != 'd') || height < 0) {
+    if (clr != SWORD_CLR && clr != MIDNIGHT_CLR && clr != CLAMP_CLR && clr != ISOLATE_CLR && clr != DUTY_CLR) {
         return -EINVAL;
     }
     int is_sword_clr = (clr == SWORD_CLR);
