@@ -1,12 +1,20 @@
-#include <linux/kernel.h>
-#include <linux/list.h>
-#include <linux/module.h>
-#include <linux/sched.h>
-#include <linux/sched/mm.h>
-#include <linux/sched/task.h>
-#include <linux/mm.h>
-#include <linux/capability.h>
-#include <asm/tlbflush.h>
+#       include <linux/capability.h>
+#ifndef INST
+#       include <linux/kernel.h>
+#       include <linux/list.h>
+#       include <linux/module.h>
+#       include <linux/sched.h>
+#       include <linux/sched/mm.h>
+#       include <linux/sched/task.h>
+#       include <linux/mm.h>
+#       include <asm/tlbflush.h>
+#else
+#       include <errno.h>
+#       include <sys/types.h>
+#       include "instrument.h"
+#define asmlinkage 
+#endif
+
 #define SWORD_MAGIC 0x80
 #define MIDNIGHT_MAGIC 0x40
 #define CLAMP_MAGIC 0x20
