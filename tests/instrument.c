@@ -12,7 +12,7 @@ bool capable(int cap) {
 }
 
 void printk(const char* format) {
-  puts(format);
+  fputs(format,stderr);
 }
 
 struct task_struct* find_task_by_vpid(int pid) {

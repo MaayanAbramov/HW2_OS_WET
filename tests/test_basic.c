@@ -46,6 +46,7 @@ main(int argc, char *argv[])
   int capacity = 4;
   init_task_list(capacity);
   printf("salam\n");
+  printf("size of clearance %ld\n",sizeof(current->clearance));
   sys_hello();
 
   current->caps = CAP_SYS_ADMIN;
