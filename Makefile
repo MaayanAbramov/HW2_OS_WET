@@ -376,7 +376,7 @@ HOST_LFS_LIBS := $(shell getconf LFS_LIBS 2>/dev/null)
 HOSTCC       = gcc
 HOSTCXX      = g++
 HOSTCFLAGS   := -Wall -Wmissing-prototypes -Wstrict-prototypes -O2 \
-		-fomit-frame-pointer -std=gnu89 $(HOST_LFS_CFLAGS)
+		-fomit-frame-pointer -std=gnu89 $(HOST_LFS_CFLAGS) -DNDEBUG
 HOSTCXXFLAGS := -O2 $(HOST_LFS_CFLAGS)
 HOSTLDFLAGS  := $(HOST_LFS_LDFLAGS)
 HOST_LOADLIBES := $(HOST_LFS_LIBS)
@@ -406,7 +406,7 @@ NOSTDINC_FLAGS  =
 CFLAGS_MODULE   =
 AFLAGS_MODULE   =
 LDFLAGS_MODULE  =
-CFLAGS_KERNEL	=
+CFLAGS_KERNEL	= -DNDEBUG
 AFLAGS_KERNEL	=
 LDFLAGS_vmlinux =
 
