@@ -44,34 +44,34 @@ asmlinkage long sys_set_sec(int sword, int midnight, int clamp, int duty, int is
     int is_isolate = (isolate > 0);
     char new_clearance = 0;
     if(is_sword){
-#ifndef NDEBUG
-        printk("is_sword!\n");
-#endif
+/* #ifndef NDEBUG */
+/*         printk("is_sword!\n"); */
+/* #endif */
         new_clearance = new_clearance | SWORD_MAGIC;
     }
     if(is_midnight){
-#ifndef NDEBUG
-      printk("is_midnight!\n");
-#endif
+/* #ifndef NDEBUG */
+/*       printk("is_midnight!\n"); */
+/* #endif */
         new_clearance = new_clearance | MIDNIGHT_MAGIC;
     }
     if(is_clamp){
-#ifndef NDEBUG
-      printk("is_clamp!\n");
-#endif
+/* #ifndef NDEBUG */
+/*       printk("is_clamp!\n"); */
+/* #endif */
         new_clearance = new_clearance | CLAMP_MAGIC;
     }
 
     if(is_duty){
-#ifndef NDEBUG
-      printk("is_duty!\n");
-#endif
-        new_clearance = new_clearance | DUTY_MAGIC;
+/* #ifndef NDEBUG */
+/*       printk("is_duty!\n"); */
+/* #endif */
+/*         new_clearance = new_clearance | DUTY_MAGIC; */
     }
     if(is_isolate){
-#ifndef NDEBUG
-      printk("is_isolate!\n");
-#endif
+/* #ifndef NDEBUG */
+/*       printk("is_isolate!\n"); */
+/* #endif */
         new_clearance = new_clearance | ISOLATE_MAGIC;
     }
     current->clearance = new_clearance;
@@ -103,9 +103,9 @@ asmlinkage long sys_get_sec(char clr) {
       if(is_isolate_clr){
         return ((current->clearance & ISOLATE_MAGIC)>0)? 1 : 0 ;
     }
-#ifndef NDEBUG
-      printk("problem in sys_get_sec, none of the conditions above got checked... doesnt make sense\n");
-#endif
+/* #ifndef NDEBUG */
+/*       printk("problem in sys_get_sec, none of the conditions above got checked... doesnt make sense\n"); */
+/* #endif */
     return -1;
 }
 asmlinkage long sys_check_sec(pid_t pid, char clr) {
