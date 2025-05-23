@@ -66,7 +66,7 @@ asmlinkage long sys_set_sec(int sword, int midnight, int clamp, int duty, int is
 /* #ifndef NDEBUG */
 /*       printk("is_duty!\n"); */
 /* #endif */
-/*         new_clearance = new_clearance | DUTY_MAGIC; */
+        new_clearance = new_clearance | DUTY_MAGIC;
     }
     if(is_isolate){
 /* #ifndef NDEBUG */
