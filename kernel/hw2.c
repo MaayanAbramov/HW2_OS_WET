@@ -178,6 +178,9 @@ asmlinkage long sys_flip_sec_branch(int height, char clr) {
     if (clr != SWORD_CLR && clr != MIDNIGHT_CLR && clr != CLAMP_CLR && clr != ISOLATE_CLR && clr != DUTY_CLR) {
         return -EINVAL;
     }
+    if (height <= 0) {
+      return -EINVAL;
+    }
     int is_sword_clr = (clr == SWORD_CLR);
     int is_midnight_clr = (clr == MIDNIGHT_CLR);
     int is_clmap_clr = (clr == CLAMP_CLR);
