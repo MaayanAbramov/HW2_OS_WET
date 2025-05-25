@@ -151,7 +151,7 @@ asmlinkage long sys_check_sec(pid_t pid, char clr) {
         }
         return (p->clearance & ISOLATE_MAGIC) ? 1 : 0;
     }
-    printk("error on sys_check_sec, shouldn't happen\n");
+    /* printk("error on sys_check_sec, shouldn't happen\n"); */
     return -1; //success
 }
 int parents_clr_converter(int height, char MAGIC) {
